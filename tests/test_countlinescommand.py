@@ -6,6 +6,10 @@ class TestCountLinesCommand(unittest.TestCase):
     def setUp(self):
         self.command = countlinescommand.CountLinesCommand()
 
+    def test_expects_input_returns_true(self):
+        result = self.command.expects_input
+        self.assertEqual(result, True)
+
     def test_begin_returns_none(self):
         result = self.command.begin()
         self.assertEqual(result, None)

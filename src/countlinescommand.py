@@ -1,4 +1,7 @@
 class CountLinesCommand:
+    @property
+    def expects_input(self):
+        return True
     def begin(self):
         self.__count = 0
         return None

@@ -5,19 +5,19 @@ import sys
 import yaml
 
 # custom modules
+import commandlineargumentexception
+import commandfactory
 import logginghelper
 
 # commands
 import countlinescommand
+import versioncommand
 
 EXIT_CODE_SUCCESS = 0
 EXIT_CODE_EXECUTION_ERROR = 1
 EXIT_CODE_ARGUMENT_ERROR = 2
 
 logger = logging.getLogger(__name__)
-
-class CommandLineArgumentException(Exception):
-    pass
 
 def configure_logging():
     script_path = os.path.realpath(__file__)
@@ -30,23 +30,42 @@ def configure_logging():
         logging.basicConfig(filename='ptxttools.log',level=logging.DEBUG)
         logger.error('Failed to initialize logging', e)
 
-def process_command():
-    command = countlinescommand.CountLinesCommand()
+def log_command_line_arguments(args):
+    logger.debug('%d command line argument(s)', len(args))
+    for index in range(0, len(args)):
+        arg = args[index]
+        logger.debug('Argument %s: %s', index, arg)
+
+def create_command(args):
+    try:
+        log_command_line_arguments(args)
+        command_factory = commandfactory.CommandFactory()
+        command_factory.register(countlinescommand.CountLinesCommand())
+        command_factory.register(versioncommand.VersionCommand())
+        command = command_factory.get_command(args)
+        return command
+    except Exception as e:
+        raise commandlineargumentexception.CommandLineArgumentException() from e
+
+def process_command(command):
     command.begin()
-    for line in sys.stdin:
-        print(str(command.process(line.rstrip())))
+    if command.expects_input:
+        for line in sys.stdin:
+            print(str(command.process(line.rstrip())))
     print(str(command.end()))
 
 try:
     configure_logging()
-    process_command()
+    command = create_command(sys.argv)
+    process_command(command)
     exit_code = EXIT_CODE_SUCCESS
-except CommandLineArgumentException as e:
+except commandlineargumentexception.CommandLineArgumentException as e:
     exit_code = EXIT_CODE_ARGUMENT_ERROR
-    logger.error('Problem with command line arguments', e)
+    logger.error('Problem with command line arguments', exc_info=True)
+    #logger.error(message, exc_info=True)
 except Exception as e:
     exit_code = EXIT_CODE_EXECUTION_ERROR
-    logger.error('Problem with command execution', e)
+    logger.error('Problem with command execution', exc_info=True)
 
 logger.debug('Exit code: {}'.format(exit_code))
 sys.exit(exit_code)

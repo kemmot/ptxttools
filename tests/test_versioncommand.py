@@ -6,6 +6,10 @@ class TestVersionCommand(unittest.TestCase):
     def setUp(self):
         self.command = versioncommand.VersionCommand()
 
+    def test_expects_input_is_false(self):
+        result = self.command.expects_input
+        self.assertEqual(result, False)
+
     def test_begin_returns_none(self):
         result = self.command.begin()
         self.assertEqual(result, None)
@@ -18,4 +22,4 @@ class TestVersionCommand(unittest.TestCase):
     def test_end_returns_version_string(self):
         self.command.begin()
         result = self.command.end()
-        self.assertEquals(result, 'Version 0.1')
+        self.assertEqual(result, 'Version 0.1')
