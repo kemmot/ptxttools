@@ -10,6 +10,7 @@ import commandfactory
 import logginghelper
 
 # commands
+import aligncommand
 import countlinescommand
 import tabulatecommand
 import versioncommand
@@ -41,9 +42,10 @@ def create_command(args):
     try:
         log_command_line_arguments(args)
         command_factory = commandfactory.CommandFactory()
-        command_factory.register(countlinescommand.CountLinesCommandParser())
+        #command_factory.register(aligncommand.AlignCommand())
+        command_factory.register(countlinescommand.CountLinesCommand())
         command_factory.register(tabulatecommand.TabulateCommandParser())
-        command_factory.register(versioncommand.VersionCommandParser())
+        command_factory.register(versioncommand.VersionCommand())
         command = command_factory.get_command(args)
         return command
     except Exception as e:
@@ -53,10 +55,10 @@ def process_command(command):
     command.begin()
     if command.expects_input:
         for line in sys.stdin:
-            result = command.process(line.rstrip())
-            if result:
-                print(str(result))
-    print(str(command.end()))
+            output = command.process(line.rstrip())
+            if output:
+                print(str(output))
+        print(str(command.end()))
 
 try:
     configure_logging()
