@@ -1,3 +1,9 @@
+import commandparser
+
+class CountLinesCommandParser(commandparser.CommandParser):
+    def fill_command(self, args):
+        return CountLinesCommand()
+
 class CountLinesCommand:
     @property
     def expects_input(self):

@@ -1,3 +1,9 @@
+import commandparser
+
+class VersionCommandParser(commandparser.CommandParser):
+    def fill_command(self, args):
+        return VersionCommand()
+
 class VersionCommand:
     @property
     def expects_input(self):

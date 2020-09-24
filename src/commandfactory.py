@@ -2,23 +2,16 @@ import commandlineargumentexception
 
 class CommandFactory:
     def __init__(self):
-        self.__commands = []
+        self.__command_parsers = []
 
-    def register(self, command):
-        self.__commands.append(command)
+    def register(self, command_parser):
+        self.__command_parsers.append(command_parser)
 
     def get_command(self, args):
-        verb = self.get_verb(args)
-        for command in self.__commands:
-            if verb.upper() in command.__class__.__name__.upper():
+        for command_parser in self.__command_parsers:
+            command = command_parser.get_command(args)
+            if command != None:
                 return command
-
         message = 'Unknown command: {}'.format(verb)
         raise commandlineargumentexception.CommandLineArgumentException(message)
 
-    def get_verb(self, args):
-        if len(args) < 2:
-            message = 'Command not specified'
-            raise commandlineargumentexception.CommandLineArgumentException(message) 
-
-        return args[1]

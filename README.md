@@ -12,6 +12,7 @@ python3 ptxttools <command> [command args] [common args]
 Command can be one of the following:
 
 * [CountLines](#count-lines-command)
+* [Tabulate](#tabulate-command)
 * [Version](#version-command)
 
 Command matching is case insensitive and based on partial matches.
@@ -34,6 +35,20 @@ python3 ptxttools countlines
 ```
 
 No command options are supported.
+
+--------------------------------------------------------------------------------
+
+## Tabulate Command
+Aligns text to columns based on a specified delimiter.
+
+### Usage
+The following example shows usage from the command line.
+
+```
+python3 ptxttools tabulate <delimiter>
+```
+
+Delimiter: the text string to use to delimit the columns.
 
 --------------------------------------------------------------------------------
 

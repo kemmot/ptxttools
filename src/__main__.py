@@ -11,6 +11,7 @@ import logginghelper
 
 # commands
 import countlinescommand
+import tabulatecommand
 import versioncommand
 
 EXIT_CODE_SUCCESS = 0
@@ -40,8 +41,9 @@ def create_command(args):
     try:
         log_command_line_arguments(args)
         command_factory = commandfactory.CommandFactory()
-        command_factory.register(countlinescommand.CountLinesCommand())
-        command_factory.register(versioncommand.VersionCommand())
+        command_factory.register(countlinescommand.CountLinesCommandParser())
+        command_factory.register(tabulatecommand.TabulateCommandParser())
+        command_factory.register(versioncommand.VersionCommandParser())
         command = command_factory.get_command(args)
         return command
     except Exception as e:
@@ -51,7 +53,9 @@ def process_command(command):
     command.begin()
     if command.expects_input:
         for line in sys.stdin:
-            print(str(command.process(line.rstrip())))
+            result = command.process(line.rstrip())
+            if result:
+                print(str(result))
     print(str(command.end()))
 
 try:
@@ -62,7 +66,6 @@ try:
 except commandlineargumentexception.CommandLineArgumentException as e:
     exit_code = EXIT_CODE_ARGUMENT_ERROR
     logger.error('Problem with command line arguments', exc_info=True)
-    #logger.error(message, exc_info=True)
 except Exception as e:
     exit_code = EXIT_CODE_EXECUTION_ERROR
     logger.error('Problem with command execution', exc_info=True)
