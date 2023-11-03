@@ -12,6 +12,7 @@ import logginghelper
 # commands
 import aligncommand
 import countlinescommand
+import formattimesheetcommand
 import prefixlinescommand
 import tabulatecommand
 import versioncommand
@@ -45,6 +46,7 @@ def create_command(args):
         command_factory = commandfactory.CommandFactory()
         command_factory.register(aligncommand.AlignCommandParser())
         command_factory.register(countlinescommand.CountLinesCommandParser())
+        command_factory.register(formattimesheetcommand.FormatTimesheetCommandParser())
         command_factory.register(prefixlinescommand.PrefixLinesCommandParser())
         command_factory.register(tabulatecommand.TabulateCommandParser())
         command_factory.register(versioncommand.VersionCommandParser())
