@@ -12,6 +12,6 @@ class CommandFactory:
             command = command_parser.get_command(args)
             if command != None:
                 return command
-        message = 'Unknown command: {}'.format(verb)
+        message = 'Unknown command: {}'.format(args[1])
         raise commandlineargumentexception.CommandLineArgumentException(message)
 

@@ -11,7 +11,9 @@ python3 ptxttools <command> [command args] [common args]
 
 Command can be one of the following:
 
+* [Align](#align-command)
 * [CountLines](#count-lines-command)
+* [PrefixLines](#prefix-lines-command)
 * [Tabulate](#tabulate-command)
 * [Version](#version-command)
 
@@ -21,6 +23,20 @@ Additional info
 
 * See [here](#common-options) for common options.
 * See [here](#exit-codes) for exit codes.
+
+--------------------------------------------------------------------------------
+
+## Align Command
+Aligns input lines read from stdin based on a particular string found in them.
+
+### Usage
+The following example shows usage from the command line.
+
+```
+python3 ptxttools align <separator>
+```
+
+separator: the string to align the text on.
 
 --------------------------------------------------------------------------------
 
@@ -38,6 +54,20 @@ No command options are supported.
 
 --------------------------------------------------------------------------------
 
+## Prefix Lines Command
+Prefixes each line of input read from stdin.
+
+### Usage
+The following example shows usage from the command line.
+
+```
+python3 ptxttools prefix <prefix-text>
+```
+
+prefix-text: the text string to prefix each line with.
+
+--------------------------------------------------------------------------------
+
 ## Tabulate Command
 Aligns text to columns based on a specified delimiter.
 
@@ -48,7 +78,7 @@ The following example shows usage from the command line.
 python3 ptxttools tabulate <delimiter>
 ```
 
-Delimiter: the text string to use to delimit the columns.
+delimiter: the text string to use to delimit the columns.
 
 --------------------------------------------------------------------------------
 

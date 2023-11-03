@@ -14,3 +14,15 @@ class CommandParser:
             raise commandlineargumentexception.CommandLineArgumentException(message) 
         return args[1]
 
+class BufferedCommand:
+    def __init__(self):
+        self.__lines = []
+    @property
+    def expects_input(self):
+        return True
+    @property
+    def lines(self):
+        return self.__lines
+    def process(self, input):
+        self.__lines.append(input)
+        return None
