@@ -11,7 +11,7 @@ class FormatTimesheetCommandParser(commandparser.CommandParser):
 class FormatTimesheetCommand(commandparser.BufferedCommand):
     def __init__(self):
         super().__init__()
-        entryLinePattern = '^(?P<start>\\d{2}:\\d{2})\\s+'
+        entryLinePattern = '^(?P<start>\\d{2}:\\d{2})\\s*'
         entryLinePattern += '((?P<end>\\d{2}:\\d{2})\\s+)?'
         entryLinePattern += '\\[(?P<code>\\S+)\\s+'
         entryLinePattern += '(?P<task>[^,]+)'
