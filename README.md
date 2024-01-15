@@ -75,10 +75,11 @@ Aligns text to columns based on a specified delimiter.
 The following example shows usage from the command line.
 
 ```
-python3 ptxttools tabulate <delimiter>
+python3 ptxttools tabulate <delimiter> <complete-lines>
 ```
 
 delimiter: the text string to use to delimit the columns.
+complete-table: set to true to fill in the remaining column header seperators for a markdown table.
 
 --------------------------------------------------------------------------------
 

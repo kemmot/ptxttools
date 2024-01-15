@@ -8,6 +8,8 @@ class TabulateCommandParser(commandparser.CommandParser):
             raise commandlineargumentexception.CommandLineArgumentException(message)
         command = TabulateCommand()
         command.delimiter = args[2]
+        if len(args) > 3 and args[3].lower().startswith('t'):
+            command.complete_lines = True
         return command
 
 class TabulateCommand:
@@ -15,9 +17,16 @@ class TabulateCommand:
         self.__delimiter = ''
         self.__rows = []
         self.__column_widths = []
+        self.__complete_lines = False
     @property
     def expects_input(self):
         return True
+    @property
+    def complete_lines(self):
+        return self.__complete_lines
+    @complete_lines.setter
+    def complete_lines(self, value):
+        self.__complete_lines = value
     @property
     def delimiter(self):
         return self.__delimiter
@@ -46,6 +55,10 @@ class TabulateCommand:
             for cell in row:
                 if column_index > 0:
                     output += self.__delimiter
-                output += cell.ljust(self.__column_widths[column_index])
+                if cell.startswith('-'):
+                    character = '-'
+                else:
+                    character = ' '
+                output += cell.ljust(self.__column_widths[column_index], character)
                 column_index += 1
         return output
