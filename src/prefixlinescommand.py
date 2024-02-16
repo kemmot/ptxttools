@@ -10,7 +10,7 @@ class PrefixLinesCommandParser(commandparser.CommandParser):
         command.prefix = args[2]
         return command
 
-class PrefixLinesCommand:
+class PrefixLinesCommand(commandparser.Command):
     def __init__(self):
         self.__prefix = ''
     @property

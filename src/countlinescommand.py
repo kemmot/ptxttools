@@ -4,7 +4,7 @@ class CountLinesCommandParser(commandparser.CommandParser):
     def fill_command(self, args):
         return CountLinesCommand()
 
-class CountLinesCommand:
+class CountLinesCommand(commandparser.Command):
     @property
     def expects_input(self):
         return True

@@ -12,7 +12,7 @@ class TabulateCommandParser(commandparser.CommandParser):
             command.complete_lines = True
         return command
 
-class TabulateCommand:
+class TabulateCommand(commandparser.Command):
     def __init__(self):
         self.__delimiter = ''
         self.__rows = []

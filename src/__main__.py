@@ -55,14 +55,32 @@ def create_command(args):
     except Exception as e:
         raise commandlineargumentexception.CommandLineArgumentException() from e
 
-def process_command(command):
+def process_command(command):    
+    if command.output_path == '-':
+        output_stream = sys.stdout
+    else:    
+        output_stream = open(command.output_path, 'w')
+
     command.begin()
     if command.expects_input:
-        for line in sys.stdin:
+        if command.input_path == '-':
+            input_stream = sys.stdin
+        else:    
+            input_stream = open(command.input_path, 'r')
+
+        for line in input_stream:
             output = command.process(line.rstrip())
-            if output:
-                print(str(output))
-    print(str(command.end()))
+            if output != None:
+                print(str(output), file=output_stream)
+
+        if input_stream != sys.stdin:
+            input_stream.close()
+
+    print(str(command.end()), file=output_stream)
+    
+    if output_stream != sys.stdin:
+        output_stream.close()
+    
 
 try:
     configure_logging()
