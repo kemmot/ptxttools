@@ -15,6 +15,7 @@ import countlinescommand
 import formattimesheetcommand
 import htmltomarkdowncommand
 import prefixlinescommand
+import sortcommand
 import tabulatecommand
 import versioncommand
 
@@ -50,6 +51,7 @@ def create_command(args):
         command_factory.register(formattimesheetcommand.FormatTimesheetCommandParser())
         command_factory.register(htmltomarkdowncommand.HtmlToMarkdownCommandParser())
         command_factory.register(prefixlinescommand.PrefixLinesCommandParser())
+        command_factory.register(sortcommand.SortCommandParser())
         command_factory.register(tabulatecommand.TabulateCommandParser())
         command_factory.register(versioncommand.VersionCommandParser())
         command = command_factory.get_command(args)
